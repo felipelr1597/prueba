@@ -1,0 +1,36 @@
+
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
+public class Terrenos {
+
+	private int horizontal = 0;
+	private int vertical = 0;
+	private int tierraMaxima = 0;
+
+	public void TerrenoManual() {
+		Scanner TECLADO = new Scanner(System.in);
+		try {
+			System.out.println("Meta los metros en HORIZONTAL del solar \n");
+			horizontal = TECLADO.nextInt();
+			System.out.println("Meta los metros en VERTICAL del solar \n");
+			vertical = TECLADO.nextInt();
+			System.out.println("Meta la tierra maxima que debe tener el solar \n");
+			tierraMaxima = TECLADO.nextInt();
+		} catch (Exception e) {
+			System.out.println("Error formato de entrada");
+		}
+	}
+
+	public void TerrenoFichero(String Archivo) throws FileNotFoundException {
+		Scanner datos = new Scanner(new FileReader(Archivo + "TerrenoInicial.txt"));
+		while (datos.hasNext()) {
+			horizontal=datos.nextInt();
+			vertical=datos.nextInt();
+			tierraMaxima=datos.nextInt();
+		}
+	}
+
+}
