@@ -53,7 +53,6 @@ public class Terrenoss {
 		for(int x=0;x<listaMovimientos.size();x++) {
 			  System.out.println(listaMovimientos.get(x).toString());
 			}
-		System.out.println(x);
 	}
 
 	public void EscrituraFichero(String Terreno[][],Tractor t,int filas,int columnas) {
@@ -113,17 +112,19 @@ public class Terrenoss {
 	}
 
 	public void RellenarTerreno( int[][] Terreno) {
-		System.out.println(v);
-		for (int i = 0; i < Terreno.length; i++) {
-			for (int j = 0; j < Terreno[i].length; j++) {
-				int meter=(int) (Math.random() * (maximo+1));
-				if(v-meter<=v&&v-meter>=0) {
-					Terreno[i][j]=meter;
-					v=v-meter;
-				}			
-				
+		int aux = this.v;
+		int cantidad_metida;
+		for(int i=0; i<Terreno.length; i++) {
+			for(int j=0; j<Terreno[i].length; j++) {
+				cantidad_metida = (int) (Math.random() * this.maximo+1);		
+				if(aux - cantidad_metida >= 0 && aux - cantidad_metida <= aux) {
+					Terreno[i][j] = cantidad_metida;
+					aux -= cantidad_metida;
+				}
 			}
 		}
+		if(aux != 0)
+			RellenarTerreno(Terreno);
 	}
 
 	public void MoverTractorAbajo(Tractor t, int Terreno[][],ArrayList listaMovimientos ) {
@@ -131,7 +132,7 @@ public class Terrenoss {
 		if (posicion >= Terreno.length - 1) {
 			MoverTactorIzquierda(t,Terreno,listaMovimientos);
 		} else {
-			Estado estado=new Estado(t.getPosicionX() + 1,t.getPosicionY());
+			Estado estado=new Estado(t.getPosicionX() + 1,t.getPosicionY(),t.getTierraAlmacenada());
 			listaMovimientos.add(listaMovimientos.size(), estado);
 			MoverTactorIzquierda(t,Terreno,listaMovimientos);
 		}
@@ -141,7 +142,7 @@ public class Terrenoss {
 		if (posicion <= 0) {
 			MoverTractorArriba( t,Terreno,listaMovimientos);
 		} else {
-			Estado estado=new Estado(t.getPosicionX(),t.getPosicionY()-1);
+			Estado estado=new Estado(t.getPosicionX() + 1,t.getPosicionY(),t.getTierraAlmacenada());
 			listaMovimientos.add(listaMovimientos.size(), estado);
 			MoverTractorArriba( t,Terreno,listaMovimientos);
 		}
@@ -151,7 +152,7 @@ public class Terrenoss {
 		if (posicion <= 0) {
 			MoverTractorDerecha(t,Terreno,listaMovimientos);
 		} else {
-			Estado estado=new Estado(t.getPosicionX()-1,t.getPosicionY());
+			Estado estado=new Estado(t.getPosicionX() + 1,t.getPosicionY(),t.getTierraAlmacenada());
 			listaMovimientos.add(listaMovimientos.size(), estado);
 			MoverTractorDerecha(t,Terreno,listaMovimientos);
 		}
@@ -167,13 +168,13 @@ public class Terrenoss {
 		if (posicion >= lineas) {
 			//MoverTractor( Terreno, t);
 		} else {
-			Estado estado=new Estado(t.getPosicionX(),t.getPosicionY()+1);
+			Estado estado=new Estado(t.getPosicionX() + 1,t.getPosicionY(),t.getTierraAlmacenada());
 			listaMovimientos.add(listaMovimientos.size(), estado);
 			//
 		}
 	}
 	
-	public void NoMoverTractor() {
+	public void GenerarListaPosibles() {
 		
 	}
 }

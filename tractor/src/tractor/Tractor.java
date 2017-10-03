@@ -43,11 +43,21 @@ public class Tractor {
 		this.maximo = maximo;
 	}
 	public int getTierraAlmacenada() {
-		return tierraAlmacenada;
+		 int valor=tierraAlmacenada=tierraActual-tierraMinima;
+		if(valor<=0) {
+			return tierraAlmacenada=0;
+		}else if(tierraActual==tierraMinima){
+			return tierraAlmacenada=0;
+		}else {
+			return tierraAlmacenada=valor;
+		}
+		 
 	}
 	public void setTierraAlmacenada() {
 		int valor=tierraAlmacenada=tierraActual-tierraMinima;
 		if(valor<=0) {
+			tierraAlmacenada=0;
+		}else if(tierraActual==tierraMinima){
 			tierraAlmacenada=0;
 		}else {
 			tierraAlmacenada=valor;
