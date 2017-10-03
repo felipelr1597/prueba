@@ -4,16 +4,19 @@ public class Tractor {
 	
 	private int posicionX;
 	private int posicionY;
+	private int tierraMinima;
+	private int maximo;
 	private int tierraActual;
 	private int tierraAlmacenada;
-	private int tierraMinima;
 	
-	public Tractor(int posicionX, int posicionY, int tierraMinima) {
+	public Tractor(int posicionX, int posicionY, int tierraMinima, int maximo,int tierraActual) {
 		this.posicionX = posicionX;
 		this.posicionY = posicionY;
 		this.tierraMinima=tierraMinima;
-		tierraActual=0;
-		tierraAlmacenada=0;
+		this.maximo=maximo;
+		this.tierraActual=tierraActual;
+		this.tierraAlmacenada=0;
+		
 	}
 	public int getPosicionX() {
 		return posicionX;
@@ -33,34 +36,31 @@ public class Tractor {
 	public void setTierraActual(int tierraActual) {
 		this.tierraActual=tierraActual;
 	}
+	public int getMaximo() {
+		return maximo;
+	}
+	public void setMaximo(int maximo) {
+		this.maximo = maximo;
+	}
 	public int getTierraAlmacenada() {
 		return tierraAlmacenada;
 	}
-	public void setTierraAlmacenada(int tierraAlamcenada) {
-		this.tierraAlmacenada=tierraAlmacenada;
-	}
-	public int sumarCinco() {
-		if(tierraAlmacenada-5<0) {
-			return -1;
+	public void setTierraAlmacenada() {
+		int valor=tierraAlmacenada=tierraActual-tierraMinima;
+		if(valor<=0) {
+			tierraAlmacenada=0;
 		}else {
-			this.tierraAlmacenada=tierraAlmacenada-5;
-			this.tierraActual=tierraActual+5;		
-			return 0;
+			tierraAlmacenada=valor;
 		}
 	}
-	public int restarCinco() {
-		if(tierraActual-5<0 || tierraActual-5<tierraMinima) {
-			return -1;
-		}else {
-			this.tierraAlmacenada=tierraAlmacenada+5;
-			this.tierraActual=tierraActual-5;	
-			return 0;
-		}
+	public int getTierraActual() {
+		return tierraActual;
 	}
-	@Override
-	public String toString() {
-		return "Tractor [posicionX=" + posicionX + ", posicionY=" + posicionY + ", tierraActual=" + tierraActual
-				+ ", tierraAlmacenada=" + tierraAlmacenada + "]";
+	public int getTierraMinima() {
+		return tierraMinima;
 	}
-	
+	public void setTierraMinima(int tierraMinima) {
+		this.tierraMinima = tierraMinima;
+	}
+
 }

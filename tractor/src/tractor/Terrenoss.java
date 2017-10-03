@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Terrenoss {
@@ -21,7 +22,7 @@ public class Terrenoss {
 		String TerrenoString[][] = new String[filas][columnas];
 		k = (int) (Math.random() * 10) + 1;
 		v = filas * columnas * k;
-		Tractor t = new Tractor(0, 0, k);		
+		Tractor t = new Tractor(0, 0, k,maximo,0);		
 		RellenarTerreno(Terreno);
 		CopiarMatriz(Terreno,TerrenoString);
 		MostrarTerreno(TerrenoString,t);
@@ -29,6 +30,7 @@ public class Terrenoss {
 	}
 
 	public void TerrenoFichero(String Archivo) throws FileNotFoundException {
+		ArrayList<Estado> listaMovimientos = new ArrayList<Estado>();
 		ruta=Archivo;
 		Scanner datos = new Scanner(new FileReader(Archivo + "TerrenoInicial.txt"));
 		int filas = 0;
@@ -42,11 +44,16 @@ public class Terrenoss {
 		v = filas * columnas * k;
 		int Terreno[][] = new int[filas][columnas];
 		String TerrenoString[][]=new String[filas][columnas];
-		Tractor t = new Tractor(0, 0, k);
+		Tractor t = new Tractor(0, 0, k,maximo,0);
 		RellenarTerreno(Terreno);
 		CopiarMatriz(Terreno,TerrenoString);
 		MostrarTerreno(TerrenoString,t);
 		EscrituraFichero(TerrenoString,t,filas,columnas);
+		MoverTractorAbajo(t,Terreno,listaMovimientos);
+		for(int x=0;x<listaMovimientos.size();x++) {
+			  System.out.println(listaMovimientos.get(x).toString());
+			}
+		System.out.println(x);
 	}
 
 	public void EscrituraFichero(String Terreno[][],Tractor t,int filas,int columnas) {
@@ -75,7 +82,6 @@ public class Terrenoss {
 		}
 	}
 	
-
 	public void CopiarMatriz(int Terreno[][], String TerrenoString[][]) {
 		for (int i = 0; i < Terreno.length; i++) {
 			for (int j = 0; j < Terreno[i].length; j++) {
@@ -118,5 +124,56 @@ public class Terrenoss {
 				
 			}
 		}
+	}
+
+	public void MoverTractorAbajo(Tractor t, int Terreno[][],ArrayList listaMovimientos ) {
+		int posicion = t.getPosicionX();
+		if (posicion >= Terreno.length - 1) {
+			MoverTactorIzquierda(t,Terreno,listaMovimientos);
+		} else {
+			Estado estado=new Estado(t.getPosicionX() + 1,t.getPosicionY());
+			listaMovimientos.add(listaMovimientos.size(), estado);
+			MoverTactorIzquierda(t,Terreno,listaMovimientos);
+		}
+	}
+	public void MoverTactorIzquierda(Tractor t, int Terreno[][],ArrayList listaMovimientos ) {
+		int posicion = t.getPosicionY();
+		if (posicion <= 0) {
+			MoverTractorArriba( t,Terreno,listaMovimientos);
+		} else {
+			Estado estado=new Estado(t.getPosicionX(),t.getPosicionY()-1);
+			listaMovimientos.add(listaMovimientos.size(), estado);
+			MoverTractorArriba( t,Terreno,listaMovimientos);
+		}
+	}
+	public void MoverTractorArriba(Tractor t, int Terreno[][],ArrayList listaMovimientos) {
+		int posicion = t.getPosicionX();
+		if (posicion <= 0) {
+			MoverTractorDerecha(t,Terreno,listaMovimientos);
+		} else {
+			Estado estado=new Estado(t.getPosicionX()-1,t.getPosicionY());
+			listaMovimientos.add(listaMovimientos.size(), estado);
+			MoverTractorDerecha(t,Terreno,listaMovimientos);
+		}
+	}
+	public void MoverTractorDerecha(Tractor t, int Terreno[][],ArrayList listaMovimientos ) {
+		int lineas=0;
+		for (int i = 0; i < Terreno.length; i++) {
+			for (int j = 0; j < Terreno[i].length; j++) {
+				lineas = lineas + 1;
+			}
+		}
+		int posicion = t.getPosicionY();
+		if (posicion >= lineas) {
+			//MoverTractor( Terreno, t);
+		} else {
+			Estado estado=new Estado(t.getPosicionX(),t.getPosicionY()+1);
+			listaMovimientos.add(listaMovimientos.size(), estado);
+			//
+		}
+	}
+	
+	public void NoMoverTractor() {
+		
 	}
 }
