@@ -38,7 +38,7 @@ public class Main {
 				t.TerrenoFichero(ruta);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-				Menu();
+				
 			}
 			break;
 		case 2:
