@@ -7,10 +7,11 @@ public class Estado {
 	private int destinoX;
 	private int destinoY;
 
+
 	public Estado(int destinoX, int destinoY, int tierraAMover) {
 		this.destinoX = destinoX;
 		this.destinoY = destinoY;
-
+	
 	}
 
 	public int getDestinoX() {
@@ -30,9 +31,11 @@ public class Estado {
 	}
 	
 
+
+
 	@Override
 	public String toString() {
-		return "Estado [destinoX=" + destinoX + ", destinoY=" + destinoY + "]";
+		return " [" + destinoX + ", " + destinoY + "]";
 	}
 
 }

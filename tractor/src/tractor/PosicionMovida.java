@@ -31,7 +31,7 @@ public class PosicionMovida {
 	}
 	@Override
 	public String toString() {
-		return " [=" + CantidadMover + ", (" + PosicionXTierra
+		return " [" + CantidadMover + ", (" + PosicionXTierra
 				+ ", " + PosicionYTierra + ")]";
 	}
 	

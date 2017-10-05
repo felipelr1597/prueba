@@ -13,12 +13,17 @@ public class Main {
 	public static int OpcionEjecucion() {
 		int peticion = 0;
 		Scanner TECLADO = new Scanner(System.in);
+		try {
 		System.out.println(
 				"¿Desea meter los valores por archivo de texto? En caso negativo los datos se usaran valores aleatorios \n 1-Si \n 2-No ");
 		peticion = TECLADO.nextInt();
 		if (peticion < 1 || peticion > 2) {
 			System.out.println("Opcion incorrecta, introduzca de nuevo");
 			peticion = TECLADO.nextInt();
+		}
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			OpcionEjecucion();
 		}
 		return peticion;
 	}
