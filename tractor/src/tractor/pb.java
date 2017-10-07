@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class Terrenoss {
+public class pb {
 
 	int k;
 	int v;
@@ -52,17 +52,19 @@ public class Terrenoss {
 		RellenarTerreno(Terreno);
 		t.setTierraActual(Terreno[t.getPosicionX()][t.getPosicionY()]);
 		int sal = 0;
-	//	while (sal == 0) {
+		while (sal == 0) {
 			CopiarMatriz(Terreno, TerrenoString);
 			MostrarTerreno(TerrenoString, t);
 			EscrituraFichero(TerrenoString, t, filas, columnas);
 			MoverTractorAbajo(t, Terreno);
 			PosicionesNoAptas(Terreno);
 			FiltarLista(t, Terreno);
-			MoverTractor(t, Terreno);		
+			MoverTractor(t, Terreno);
+			CopiarMatriz(Terreno, TerrenoString);
+			MostrarTerreno(TerrenoString, t);
 			System.out.println("Tierra almacenda en el tractor :" + t.getTierraAlmacenada());
 			BorrarListas();
-	//	}
+		}
 	}
 
 	public void EscrituraFichero(String Terreno[][], Tractor t, int filas, int columnas) {
@@ -209,7 +211,6 @@ public class Terrenoss {
 	}
 
 	public void FiltarLista(Tractor t, int Terreno[][]) {
-		
 		while (!pila.isEmpty()) {
 			PosicionMovida[] matriz = new PosicionMovida[listaMovimientos.size()];
 			int suma = 0;
@@ -221,11 +222,9 @@ public class Terrenoss {
 				suma = matriz[i].getCantidadMover() + suma;	
 				int tierra = Terreno[matriz[i].getPosicionXTierra()][matriz[i].getPosicionYTierra()];
 				int sum=matriz[i].getCantidadMover() + tierra;
-				if (sum > maximo) {
-																							
+				if (sum < maximo) {
+					FiltarLista(t, Terreno);																			
 				}
-			}if(suma!=t.getTierraAlmacenada()) {
-				FiltarLista(t, Terreno);	
 			}
 			for (int i = 0; i < matriz.length; i++) {
 				int posx = matriz[i].getPosicionXTierra();
@@ -256,13 +255,14 @@ public class Terrenoss {
 
 			}
 
-			if (suma <= maximo && suma >= k) {
+			if (suma==t.getTierraAlmacenada()) {
 				for (int i = 0; i < matriz.length; i++) {
 					if (!MovimientosFil.contains(matriz[i])) {
 						MovimientosFil.add(MovimientosFil.size(), matriz[i]);
 					}
 				}
 			}
+			suma=0;
 		}
 	}
 
@@ -285,7 +285,6 @@ public class Terrenoss {
 						+ listaMovimientos.get(i).getPosicionYTierra() + ")");
 			}
 			int posicion = TECLADO.nextInt();
-			System.out.println(t.getTierraAlmacenada());
 			if (!MovimientosFil.isEmpty()) {
 				System.out.println("Seleccione la tierra que puede mover");
 				int cont = 0;
@@ -303,26 +302,26 @@ public class Terrenoss {
 					}
 				}
 				int combinacion = TECLADO.nextInt();
-				int op=((combinacion-1) *listaMovimientos.size());
-				
-				for (int i = 0 + op; i < op+listaMovimientos.size(); i++) {
-					int tier=t.getTierraAlmacenada();
+				for (int i = 0 + (valor - 1); i < ((combinacion - 1) + listaMovimientos.size()); i++) {
 					int tierra = Terreno[MovimientosFil.get(i).getPosicionXTierra()][MovimientosFil.get(i)
 							.getPosicionYTierra()];
-					t.setTierraAlmacenada(MovimientosFil.get(i).getCantidadMover());
-					System.out.println(t.getTierraAlmacenada()+"---"+MovimientosFil.get(i).getCantidadMover());
-					
-					int valor2= MovimientosFil.get(i).getCantidadMover() + tierra;
+					t.setTierraAlmacenada(tierra - MovimientosFil.get(i).getCantidadMover());
 					Terreno[MovimientosFil.get(i).getPosicionXTierra()][MovimientosFil.get(i)
-							.getPosicionYTierra()] =valor2;
+							.getPosicionYTierra()] = MovimientosFil.get(i).getCantidadMover() + tierra;
 					Terreno[t.getPosicionX()][t.getPosicionY()] = k;
-					
 				}
-				
-			} 
+			} else {
+				if (Terreno[t.getPosicionX()][t.getPosicionY()] - k <= 0) {
+					t.setTierraAlmacenada(0);
+					Terreno[t.getPosicionX()][t.getPosicionY()] = k;
+				} else {
+					t.setTierraAlmacenada(Terreno[t.getPosicionX()][t.getPosicionY()] - k);
+					Terreno[t.getPosicionX()][t.getPosicionY()] = k;
+				}
+			}
 			t.setPosicionX(listaMovimientos.get(posicion - 1).getPosicionXTierra());
 			t.setPosicionY(listaMovimientos.get(posicion - 1).getPosicionYTierra());
-			
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			MoverTractor(t, Terreno);
