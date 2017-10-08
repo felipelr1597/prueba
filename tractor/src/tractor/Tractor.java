@@ -52,18 +52,23 @@ public class Tractor {
 	}
 
 	public int getTierraAlmacenada() {
-		if ((tierraActual- tierraMinima )  +tierraAlmacenada <= 0) {
+		return tierraAlmacenada;
+
+	}
+
+	public int calcularTierraAlmacenada() {
+		if ((tierraActual - tierraMinima) + tierraAlmacenada <= 0) {
 			return tierraAlmacenada = 0;
 		} else if (tierraActual == tierraMinima) {
 			return tierraAlmacenada = 0;
 		} else {
-			return (tierraActual- tierraMinima )  +tierraAlmacenada ;
+			return (tierraActual - tierraMinima) + tierraAlmacenada;
 		}
-
 	}
-public void setTierraAlmacenada(int tierra) {
-	this.tierraAlmacenada=tierra;
-}
+
+	public void setTierraAlmacenada(int tierra) {
+		this.tierraAlmacenada = tierra;
+	}
 
 	public int getTierraMinima() {
 		return tierraMinima;
