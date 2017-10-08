@@ -67,7 +67,7 @@ public class Main {
 		}
 	}
 
-	public static String BuscarArchivo() {
+	public static void BuscarArchivo() {
 		File f = null;
 		String[] strs = { "TerrenoInicial.txt", "TerrenosFinales.txt" };
 		String ruta=null;
@@ -102,6 +102,5 @@ public class Main {
 			// if any I/O error occurs
 			e.printStackTrace();
 		}
-		return directorio;
 	}
 }
