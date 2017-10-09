@@ -1,0 +1,5 @@
+- Tractor solo tiene posx y posy
+- Calcular s en terreno
+- Combinatoria con objetos
+- Rellenar el terreno
+- Poner nombres representativos a las clases y a las variables
